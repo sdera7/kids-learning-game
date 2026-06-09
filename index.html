@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jungle Adventure - Kids Learning Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="gameContainer" class="game-container">
+        <!-- Main Menu -->
+        <div id="mainMenu" class="screen active">
+            <div class="menu-content">
+                <h1 class="game-title">🌴 Jungle Adventure 🌴</h1>
+                <p class="game-subtitle">An Exciting Adventure Awaits!</p>
+                <button class="btn btn-primary btn-large" onclick="startGame()">Play Game</button>
+                <button class="btn btn-secondary btn-small" onclick="toggleSettings()">⚙️ Settings</button>
+            </div>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settingsScreen" class="screen">
+            <div class="settings-content">
+                <h2>Settings</h2>
+                <div class="setting-item">
+                    <label>Sound Effects</label>
+                    <input type="checkbox" id="soundToggle" checked onchange="toggleSound()">
+                </div>
+                <div class="setting-item">
+                    <label>Background Music</label>
+                    <input type="checkbox" id="musicToggle" checked onchange="toggleMusic()">
+                </div>
+                <button class="btn btn-primary" onclick="toggleSettings()">Back</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="screen">
+            <div class="game-header">
+                <div class="stars-display">⭐ Stars: <span id="starsCount">0</span></div>
+                <button class="btn btn-small" onclick="openPauseMenu()">⏸️ Pause</button>
+            </div>
+
+            <div class="game-world">
+                <canvas id="gameCanvas" width="800" height="600"></canvas>
+            </div>
+
+            <div class="game-info">
+                <p id="gameMessage">Use Arrow Keys or WASD to move. Space to interact!</p>
+            </div>
+        </div>
+
+        <!-- Pause Menu -->
+        <div id="pauseMenu" class="screen">
+            <div class="pause-content">
+                <h2>Game Paused</h2>
+                <button class="btn btn-primary btn-large" onclick="resumeGame()">Resume</button>
+                <button class="btn btn-secondary btn-large" onclick="goToMainMenu()">Main Menu</button>
+            </div>
+        </div>
+
+        <!-- Achievements Screen -->
+        <div id="achievementsScreen" class="screen">
+            <div class="achievements-content">
+                <h2>🏆 Achievements</h2>
+                <div id="achievementsList" class="achievements-list"></div>
+                <button class="btn btn-primary" onclick="closeAchievements()">Close</button>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOverScreen" class="screen">
+            <div class="gameover-content">
+                <h2 id="gameOverTitle">Level Complete!</h2>
+                <div class="gameover-stats">
+                    <p>⭐ Stars Collected: <span id="finalStars">0</span></p>
+                    <p>🏆 Achievements Unlocked: <span id="unlockedAchievements">0</span></p>
+                </div>
+                <button class="btn btn-primary btn-large" onclick="nextLevel()">Next Level</button>
+                <button class="btn btn-secondary btn-large" onclick="goToMainMenu()">Main Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="assets/sounds/background-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="js/game.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/world.js"></script>
+    <script src="js/achievements.js"></script>
+</body>
+</html>
