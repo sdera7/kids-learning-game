@@ -1,0 +1,567 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
+/* ─── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --jungle-dark:   #1a3a08;
+  --jungle-mid:    #2d6a10;
+  --jungle-bright: #5aad2c;
+  --leaf-light:    #a8e063;
+  --sun-yellow:    #ffd23f;
+  --sun-orange:    #ff9b21;
+  --sky-blue:      #87ceeb;
+  --sky-deep:      #4aa8d8;
+  --coral:         #ff6b47;
+  --earth-brown:   #8b4513;
+  --earth-light:   #c8845a;
+  --cream:         #fffbf0;
+  --white:         #ffffff;
+  --text-dark:     #1a2e0a;
+
+  --radius-pill:   999px;
+  --radius-lg:     20px;
+  --radius-md:     14px;
+
+  --shadow-btn:    0 6px 0 rgba(0,0,0,0.25);
+  --shadow-card:   0 8px 24px rgba(0,0,0,0.18);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--jungle-dark);
+  font-family: 'Nunito', sans-serif;
+  color: var(--text-dark);
+  user-select: none;
+}
+
+/* ─── Game Container ────────────────────────────────────────── */
+.game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(160deg, #0d2b05 0%, #1a4a0a 50%, #0d2b05 100%);
+}
+
+/* Ambient jungle leaves background */
+.game-container::before {
+  content: '🌿🌴🌿🍃🌴🌿🍃🌿🌴🍃🌿🌴🌿';
+  position: absolute;
+  top: -10px; left: 0; right: 0;
+  font-size: 2.8rem;
+  letter-spacing: 0.5rem;
+  opacity: 0.18;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.game-container::after {
+  content: '🌿🍃🌴🌿🍃🌿🌴🌿🍃🌴🌿🍃🌿';
+  position: absolute;
+  bottom: -10px; left: 0; right: 0;
+  font-size: 2.8rem;
+  letter-spacing: 0.5rem;
+  opacity: 0.18;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* ─── Screens ───────────────────────────────────────────────── */
+.screen {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  animation: screenIn 0.35s cubic-bezier(.34,1.56,.64,1) both;
+}
+.screen.active { display: flex; }
+
+@keyframes screenIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Main Menu ─────────────────────────────────────────────── */
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 48px 56px;
+  background: linear-gradient(145deg, #2d7a12, #1a4a0a);
+  border-radius: var(--radius-lg);
+  border: 4px solid var(--leaf-light);
+  box-shadow: var(--shadow-card), 0 0 60px rgba(90,173,44,0.25);
+  max-width: 420px;
+  width: 90%;
+}
+
+.game-title {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  color: var(--sun-yellow);
+  text-align: center;
+  line-height: 1.1;
+  text-shadow: 0 4px 0 #8b4513, 0 6px 12px rgba(0,0,0,0.4);
+  animation: titleBounce 2.4s ease-in-out infinite;
+  letter-spacing: 0.02em;
+}
+
+@keyframes titleBounce {
+  0%,100% { transform: translateY(0) rotate(-1deg); }
+  50%      { transform: translateY(-8px) rotate(1deg); }
+}
+
+.game-subtitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--leaf-light);
+  text-align: center;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
+
+/* ─── Buttons ───────────────────────────────────────────────── */
+.btn {
+  font-family: 'Fredoka One', sans-serif;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s, filter 0.12s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.03em;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: translateY(4px) scale(0.96) !important;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.25) !important;
+  filter: brightness(0.92);
+}
+
+.btn-primary {
+  background: linear-gradient(160deg, var(--sun-yellow), var(--sun-orange));
+  color: var(--earth-brown);
+  box-shadow: var(--shadow-btn);
+  font-size: 1.25rem;
+  padding: 14px 36px;
+}
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 0 rgba(0,0,0,0.22);
+  filter: brightness(1.06);
+}
+
+.btn-secondary {
+  background: linear-gradient(160deg, var(--sky-blue), var(--sky-deep));
+  color: var(--white);
+  box-shadow: 0 5px 0 #2e7aaa;
+  font-size: 1.15rem;
+  padding: 12px 28px;
+}
+.btn-secondary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 0 #2e7aaa;
+}
+
+.btn-large  { font-size: 1.4rem; padding: 18px 44px; min-width: 200px; }
+.btn-small  { font-size: 0.95rem; padding: 8px 18px; }
+
+.btn-danger {
+  background: linear-gradient(160deg, #ff6b6b, #e63946);
+  color: var(--white);
+  box-shadow: 0 5px 0 #9b1c1c;
+}
+
+/* ─── Settings Screen ───────────────────────────────────────── */
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 44px 52px;
+  background: linear-gradient(145deg, #2d7a12, #1a4a0a);
+  border-radius: var(--radius-lg);
+  border: 4px solid var(--leaf-light);
+  box-shadow: var(--shadow-card);
+  min-width: 320px;
+}
+
+.settings-content h2 {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 2rem;
+  color: var(--sun-yellow);
+  text-shadow: 0 3px 0 #8b4513;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 24px;
+  padding: 14px 20px;
+  background: rgba(255,255,255,0.08);
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(168,224,99,0.25);
+}
+
+.setting-item label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--leaf-light);
+}
+
+/* Big chunky toggle */
+.setting-item input[type="checkbox"] {
+  appearance: none;
+  width: 58px; height: 30px;
+  border-radius: var(--radius-pill);
+  background: rgba(255,255,255,0.2);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.25s;
+  flex-shrink: 0;
+  border: 3px solid rgba(255,255,255,0.3);
+}
+.setting-item input[type="checkbox"]:checked {
+  background: var(--jungle-bright);
+  border-color: var(--leaf-light);
+}
+.setting-item input[type="checkbox"]::after {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--white);
+  top: 2px; left: 3px;
+  transition: transform 0.25s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.setting-item input[type="checkbox"]:checked::after {
+  transform: translateX(26px);
+}
+
+/* ─── Game Screen ───────────────────────────────────────────── */
+#gameScreen {
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.game-header {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(0,0,0,0.35);
+  border-bottom: 3px solid rgba(168,224,99,0.3);
+}
+
+.stars-display {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.4rem;
+  color: var(--sun-yellow);
+  text-shadow: 0 2px 0 #8b4513;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.04em;
+}
+
+#starsCount {
+  font-size: 1.7rem;
+  color: var(--white);
+  transition: transform 0.2s cubic-bezier(.34,1.56,.64,1);
+}
+#starsCount.pop {
+  transform: scale(1.6);
+}
+
+.game-world {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#gameCanvas {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 130px);
+  image-rendering: pixelated;
+  border-left: 3px solid rgba(168,224,99,0.2);
+  border-right: 3px solid rgba(168,224,99,0.2);
+}
+
+.game-info {
+  width: 100%;
+  max-width: 820px;
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.4);
+  border-top: 3px solid rgba(168,224,99,0.3);
+  text-align: center;
+}
+
+#gameMessage {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--leaf-light);
+  min-height: 1.4em;
+  transition: opacity 0.3s;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Pause Menu ────────────────────────────────────────────── */
+.pause-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 48px 56px;
+  background: linear-gradient(145deg, rgba(26,58,8,0.97), rgba(45,106,16,0.97));
+  border-radius: var(--radius-lg);
+  border: 4px solid var(--sun-yellow);
+  box-shadow: var(--shadow-card), 0 0 40px rgba(255,210,63,0.2);
+}
+
+.pause-content h2 {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 2.4rem;
+  color: var(--sun-yellow);
+  text-shadow: 0 3px 0 #8b4513;
+}
+
+/* ─── Achievements Screen ───────────────────────────────────── */
+.achievements-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 36px 40px;
+  background: linear-gradient(145deg, #2d7a12, #1a4a0a);
+  border-radius: var(--radius-lg);
+  border: 4px solid var(--sun-yellow);
+  box-shadow: var(--shadow-card);
+  max-width: 500px;
+  width: 92%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.achievements-content h2 {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 2rem;
+  color: var(--sun-yellow);
+  text-shadow: 0 3px 0 #8b4513;
+}
+
+.achievements-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 2.5px solid;
+  transition: transform 0.2s;
+}
+.achievement-item.unlocked {
+  background: rgba(90,173,44,0.22);
+  border-color: var(--jungle-bright);
+}
+.achievement-item.locked {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.15);
+  opacity: 0.55;
+  filter: grayscale(0.6);
+}
+.achievement-item:hover { transform: scale(1.02); }
+
+.achievement-icon {
+  font-size: 2rem;
+  width: 48px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.achievement-info { flex: 1; }
+.achievement-name {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.05rem;
+  color: var(--cream);
+  margin-bottom: 2px;
+}
+.achievement-desc {
+  font-size: 0.85rem;
+  color: var(--leaf-light);
+  opacity: 0.85;
+}
+
+/* ─── Game Over Screen ──────────────────────────────────────── */
+.gameover-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 48px 56px;
+  background: linear-gradient(145deg, #2d7a12, #1a4a0a);
+  border-radius: var(--radius-lg);
+  border: 4px solid var(--sun-yellow);
+  box-shadow: var(--shadow-card), 0 0 60px rgba(255,210,63,0.25);
+  text-align: center;
+  max-width: 440px;
+  width: 90%;
+  animation: celebrationPop 0.5s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+@keyframes celebrationPop {
+  from { opacity: 0; transform: scale(0.5) rotate(-8deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+#gameOverTitle {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 2.6rem;
+  color: var(--sun-yellow);
+  text-shadow: 0 4px 0 #8b4513;
+  animation: titleBounce 1.8s ease-in-out infinite;
+}
+
+.gameover-stats {
+  background: rgba(0,0,0,0.2);
+  border-radius: var(--radius-md);
+  padding: 16px 28px;
+  width: 100%;
+}
+.gameover-stats p {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--leaf-light);
+  padding: 6px 0;
+}
+.gameover-stats span {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.4rem;
+  color: var(--white);
+}
+
+/* ─── Toast Notification ────────────────────────────────────── */
+.toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-80px);
+  background: linear-gradient(135deg, var(--jungle-bright), var(--jungle-mid));
+  color: var(--white);
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1.15rem;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  border: 3px solid var(--leaf-light);
+  box-shadow: var(--shadow-card);
+  z-index: 9999;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(.34,1.56,.64,1), opacity 0.3s;
+  white-space: nowrap;
+  opacity: 0;
+}
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ─── Star Particle ─────────────────────────────────────────── */
+@keyframes starFloat {
+  0%   { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -90px) scale(1.5); }
+}
+.star-particle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 1.8rem;
+  animation: starFloat 0.9s ease-out forwards;
+  z-index: 100;
+}
+
+/* ─── Level Badge ────────────────────────────────────────────── */
+.level-badge {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 1rem;
+  color: var(--sun-yellow);
+  background: rgba(0,0,0,0.3);
+  border: 2px solid var(--sun-yellow);
+  border-radius: var(--radius-pill);
+  padding: 4px 14px;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--jungle-bright); border-radius: 4px; }
+
+/* ─── Responsive ────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .menu-content, .pause-content, .gameover-content { padding: 32px 24px; }
+  .game-title { font-size: 2rem; }
+  .btn-large { font-size: 1.2rem; padding: 16px 32px; }
+  .achievements-content { padding: 24px 20px; }
+}
+
+/* ─── Footer ────────────────────────────────────────────────── */
+.game-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 6px 12px;
+  background: rgba(0,0,0,0.45);
+  border-top: 1px solid rgba(168,224,99,0.15);
+  z-index: 50;
+  pointer-events: none;
+}
+
+.game-footer p {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(168,224,99,0.6);
+  letter-spacing: 0.03em;
+}
+
+.game-footer a {
+  color: var(--sun-yellow);
+  text-decoration: none;
+  pointer-events: all;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.game-footer a:hover { opacity: 1; text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
